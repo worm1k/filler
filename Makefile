@@ -1,30 +1,58 @@
-NAME = libft.a
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
-ft_isprint.c ft_itoa.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c     \
-ft_lstmap.c ft_lstnew.c ft_memalloc.c ft_memccpy.c ft_memchr.c ft_memcmp.c     \
-ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_putchar.c ft_putchar_fd.c  \
-ft_putendl.c ft_putendl_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putstr.c            \
-ft_putstr_fd.c ft_strcat.c ft_strchr.c ft_strclr.c ft_strcmp.c ft_strcpy.c     \
-ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c ft_striteri.c ft_strjoin.c    \
-ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c    \
-ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c  \
-ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_strrev.c     \
-ft_memswap.c ft_islower.c ft_isupper.c ft_strtoupper.c ft_strtolower.c         \
-ft_strcapitalize.c
-OBJ = $(SRC:.c=.o)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: abykov <abykov@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/02/09 15:51:41 by abykov            #+#    #+#              #
+#    Updated: 2017/02/12 17:54:42 by abykov           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-all: $(NAME)
+.PHONY: all clean fclean re
+
+CC = gcc
+
+FLAGS = -Wall -Wextra -Werror
+
+NAME = a
+
+SRC_PATH = .
+INC_PATH = .
+OBJ_PATH = .
+LIB_PATH = libft
+
+SRC_NAME =	filler.c
+
+INC_NAME = fdf.h
+
+OBJ_NAME = $(SRC_NAME:.c=.o)
+
+SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
+INC = $(addprefix $(INC_PATH)/, $(INC_NAME))
+OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
+LIB = libft.a
+
+all: $(LIB) $(NAME)
 	
 $(NAME): $(OBJ)
-	ar rc libft.a $(OBJ)
-.o:
-	$(CC) -c $(SRC) $(CFLAGS)
+	gcc -o $(NAME) $(FLAGS) $(OBJ) $(LIB_PATH)/$(LIB)
+
+$(LIB):
+	make -C $(LIB_PATH)/
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c  $(INC)
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	$(CC) -o $@ -c $<
+
 clean:
 	rm -rf $(OBJ)
+	make -C $(LIB_PATH)/ clean
+
 fclean: clean
-	rm -rf libft.a
+	rm -rf $(NAME)
+	rm -rf $(LIB_PATH)/$(LIB)
 
 re: fclean all
-	@echo "Done"
+	
