@@ -21,6 +21,8 @@
 # include <stdio.h>
 # include "libft/libft.h"
 
+FILE				*f;
+int					fd;
 typedef struct		s_lst
 {
 	struct s_lst	*next;
@@ -28,5 +30,16 @@ typedef struct		s_lst
 	int				fd;
 }					t_lst;
 int					get_next_line(const int fd, char **line);
+
+typedef	struct		s_data
+{
+	char			c;
+	char			opp;
+	int				x;
+	int				y;
+	char			**map;
+}					t_data;
+
+void				make_move(t_data *plat, t_data *piec);
 
 #endif
