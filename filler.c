@@ -61,23 +61,39 @@ void		plateau_skip(char **line)
 	ft_strdel(line);
 }
 
-void		alloc_map(int x, int y, char ***map)
+void		alloc_map(t_data *data)
 {
-	char	*line;
 	int		i;
 
 	i = 0;
-	*map = (char **)malloc(sizeof(char *) * y + 1);
-	(*map)[y] = 0;
-	while (i < y)
+	data->map = (char **)malloc(sizeof(char *) * data->y + 1);
+	data->prior = (int **)malloc(sizeof(int *) * data->y);
+	data->map[data->y] = 0;
+	while (i < data->y)
 	{
-		(*map)[i] = (char *)malloc(sizeof(char) * (x + 1));
-		(*map)[i][x] = '\0';
+		data->map[i] = (char *)malloc(sizeof(char) * (data->x + 1));
+		data->prior[i] = (int *)malloc(sizeof(int) * (data->x));
+		data->map[i][data->x] = '\0';
 		i++;
 	}
 }
 
-void		read_map(int x, int y, char **map)
+void		alloc_piece(t_data *data)
+{
+	int		i;
+
+	i = 0;
+	data->piece = (char **)malloc(sizeof(char *) * data->y + 1);
+	data->piece[data->y] = 0;
+	while (i < data->y)
+	{
+		data->piece[i] = (char *)malloc(sizeof(char) * (data->x + 1));
+		data->piece[i][data->x] = '\0';
+		i++;
+	}
+}
+
+void		read_map(t_data *data)
 {
 	char	*line;
 	int		i;
@@ -85,44 +101,43 @@ void		read_map(int x, int y, char **map)
 	int		k;
 
 	i = 0;
-	while(i < y)
+	while(i < data->y)
 	{
 		get_next_line(fd, &line);
 		k = 0;
 		while (!ft_strchr(".OX", line[k]))
-		{
 			k++;
-		}
 		j = 0;
-		while (j < x)
+		while (j < data->x)
 		{
-			map[i][j] = line[k];
+			data->map[i][j] = line[k];
+			data->prior[i][j] = 2147483647;
 			j++;
 			k++;
 		}
-		fprintf(f, "%03d %s\n", i, map[i]);
+		fprintf(f, "%03d %s\n", i, data->map[i]);
 		ft_strdel(&line);
 		i++;
 	}
 }
 
-void		read_piece(int x, int y, char **map)
+void		read_piece(t_data *data)
 {
 	char	*line;
 	int		i;
 	int		j;
 
 	i = 0;
-	while(i < y)
+	while(i < data->py)
 	{
 		get_next_line(fd, &line);
 		j = 0;
-		while (j < x)
+		while (j < data->px)
 		{
-			map[i][j] = line[j];
+			data->map[i][j] = line[j];
 			j++;
 		}
-		fprintf(f, "%s\n", map[i]);
+		fprintf(f, "%s\n", data->map[i]);
 		ft_strdel(&line);
 		i++;
 	}
@@ -131,25 +146,24 @@ void		read_piece(int x, int y, char **map)
 int			main()
 {
 	int		i;
-	t_data	*plat;
-	t_data	*piec;
+	t_data	*data;
 	char	*line;
 
-	plat = (t_data *)malloc(sizeof(t_data));
-	piec = (t_data *)malloc(sizeof(t_data));
+	data = (t_data *)malloc(sizeof(t_data));
 	f = fopen("debug.log", "w");
 	fd = 0;
-	o_or_x(plat);
-	read_xy(&plat->x, &plat->y);
-	alloc_map(plat->x, plat->y, &plat->map);
+	o_or_x(data);
+	read_xy(&data->x, &data->y);
+	alloc_map(data);
 	while (get_next_line(fd, &line) > 0)
 	{
 		plateau_skip(&line);
-		read_map(plat->x, plat->y, plat->map);
-		read_xy(&piec->x, &piec->y);
-		alloc_map(piec->x, piec->y, &piec->map);
-		read_piece(piec->x, piec->y, piec->map);
-		make_move(plat, piec);
+		read_map(data);
+		read_xy(&data->px, &data->py);
+		alloc_piece(data);
+		read_piece(data);
+		build_priority(data);
+		//delete_map and piece
 	}
 	fclose(f);
 	close(fd);

@@ -24,7 +24,8 @@ OBJ_PATH = .
 LIB_PATH = libft
 
 SRC_NAME =	filler.c \
-			make_move.c
+			make_move.c \
+			build_priority.c
 
 INC_NAME = fdf.h
 

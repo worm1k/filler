@@ -37,9 +37,14 @@ typedef	struct		s_data
 	char			opp;
 	int				x;
 	int				y;
+	int				px;
+	int				py;
 	char			**map;
+	char			**piece;
+	int				**prior;
 }					t_data;
 
-void				make_move(t_data *plat, t_data *piec);
+void				make_move(t_data *data);
+void				build_priority(t_data *data);
 
 #endif
