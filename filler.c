@@ -83,12 +83,13 @@ void		alloc_piece(t_data *data)
 	int		i;
 
 	i = 0;
-	data->piece = (char **)malloc(sizeof(char *) * data->y + 1);
-	data->piece[data->y] = 0;
-	while (i < data->y)
+	data->piece = (char **)malloc(sizeof(char *) * data->py + 1);
+	data->piece[data->py] = 0;
+	fprintf(f, "[%d][%d]\n", data->py, data->px);
+	while (i < data->py)
 	{
-		data->piece[i] = (char *)malloc(sizeof(char) * (data->x + 1));
-		data->piece[i][data->x] = '\0';
+		data->piece[i] = (char *)malloc(sizeof(char) * (data->px + 1));
+		data->piece[i][data->px] = '\0';
 		i++;
 	}
 }
@@ -134,10 +135,10 @@ void		read_piece(t_data *data)
 		j = 0;
 		while (j < data->px)
 		{
-			data->map[i][j] = line[j];
+			data->piece[i][j] = line[j];
 			j++;
 		}
-		fprintf(f, "%s\n", data->map[i]);
+		fprintf(f, "%s\n", data->piece[i]);
 		ft_strdel(&line);
 		i++;
 	}
