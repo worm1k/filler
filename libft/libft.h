@@ -75,6 +75,9 @@ void				ft_memswap(void *a, void *b, size_t size);
 char				*ft_strtoupper(char *s);
 char				*ft_strtolower(char *s);
 char				*ft_strcapitalize(char *s);
+int					ft_max(int a, int b);
+int					ft_min(int a, int b);
+int					ft_abs(int a);
 typedef struct		s_list
 {
 	void			*content;

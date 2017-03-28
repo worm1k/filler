@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_priority.c                                   :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abykov <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,46 +12,10 @@
 
 #include "filler.h"
 
-void		calc_rel_prior(t_data *data, int ii, int jj)
+void	ft_printf(int y, int x)
 {
-	int		i;
-	int		j;
-	int		temp;
-
-	i = 0;
-	while (i < data->y)
-	{
-		j = 0;
-		while (j < data->x)
-		{
-			if (data->map[i][j] != data->opp)
-			{
-				temp = ft_abs(i - ii) + ft_abs(j - jj);
-				data->prior[i][j] = ft_min(temp, data->prior[i][j]);
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void		build_priority(t_data *data)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < data->y)
-	{
-		j = 0;
-		while (j < data->x)
-		{
-			if (data->map[i][j] == data->opp)
-			{
-				calc_rel_prior(data, i, j);
-			}
-			j++;
-		}
-		i++;
-	}
+	ft_putnbr(y);
+	ft_putchar(' ');
+	ft_putnbr(x);
+	ft_putchar('\n');
 }

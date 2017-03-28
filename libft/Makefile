@@ -12,7 +12,7 @@ ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c    \
 ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c  \
 ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_strrev.c     \
 ft_memswap.c ft_islower.c ft_isupper.c ft_strtoupper.c ft_strtolower.c         \
-ft_strcapitalize.c get_next_line.c
+ft_strcapitalize.c get_next_line.c ft_math.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

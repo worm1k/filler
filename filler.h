@@ -21,8 +21,6 @@
 # include <stdio.h>
 # include "libft/libft.h"
 
-FILE				*f;
-int					fd;
 typedef struct		s_lst
 {
 	struct s_lst	*next;
@@ -42,9 +40,18 @@ typedef	struct		s_data
 	char			**map;
 	char			**piece;
 	int				**prior;
+	int				xx;
+	int				yy;
+	int				sum;
 }					t_data;
 
 void				make_move(t_data *data);
 void				build_priority(t_data *data);
+void				alloc_map(t_data *data);
+void				alloc_piece(t_data *data);
+void				read_map(t_data *data);
+void				read_piece(t_data *data);
+void				ft_printf(int y, int x);
+void				clean_piece(t_data *data);
 
 #endif

@@ -16,7 +16,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-NAME = a
+NAME = filler
 
 SRC_PATH = .
 INC_PATH = .
@@ -24,8 +24,10 @@ OBJ_PATH = .
 LIB_PATH = libft
 
 SRC_NAME =	filler.c \
+			alloc_read.c \
 			make_move.c \
-			build_priority.c
+			build_priority.c \
+			ft_printf.c
 
 INC_NAME = fdf.h
 
@@ -46,15 +48,15 @@ $(LIB):
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c  $(INC)
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
-	$(CC) -o $@ -c $<
+	$(CC) -o $@ -c $< $(FLAGS)
 
 clean:
 	rm -rf $(OBJ)
-#	make -C $(LIB_PATH)/ clean
+	make -C $(LIB_PATH)/ clean
 
 fclean: clean
 	rm -rf $(NAME)
-#	rm -rf $(LIB_PATH)/$(LIB)
+	rm -rf $(LIB_PATH)/$(LIB)
 
 re: fclean all
 	

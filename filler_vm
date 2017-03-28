@@ -363,7 +363,7 @@ class	Vm_filler
 	attr_accessor :map, :player, :challenger, :interactif, :sid, :verbose, :time, :modif_time
 
 	def	initialize(argv = nil)
-		self.time = 1
+		self.time = 5
 		self.modif_time = 0
 		self.map = nil
 		self.player = nil
